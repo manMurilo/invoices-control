@@ -1,0 +1,42 @@
+{
+    "0": {
+        "contratante": "HS Central",
+        "email": "algar@algar.com",
+        "fornecedor": "Algar Telecom",
+        "id": "1",
+        "inventoryStatus": "PAGO",
+        "obs": "Link dedicado 100Mb",
+        "valor": "150",
+        "vencimento": "10/01/2023"
+    },
+    "1": {
+        "contratante": "MPP",
+        "email": "algar@algar.com",
+        "fornecedor": "Algar Telecom",
+        "id": "2",
+        "inventoryStatus": "PENDENTE",
+        "obs": "Link dedicado 30Mb",
+        "valor": "50",
+        "vencimento": "15/01/2023"
+    },
+    "2": {
+        "contratante": "VP",
+        "email": "algar@algar.com",
+        "fornecedor": "Algar Telecom",
+        "id": "3",
+        "inventoryStatus": "ATRASADO",
+        "obs": "Link dedicado 50Mb",
+        "valor": "100",
+        "vencimento": "20/01/2023"
+    },
+    "3": {
+        "contratante": "HS Central",
+        "email": "algar@algar.com",
+        "fornecedor": "Algar Telecom",
+        "id": "1",
+        "inventoryStatus": "PAGO",
+        "obs": "Link dedicado 100Mb",
+        "valor": "150",
+        "vencimento": "10/01/2023"
+    }
+}

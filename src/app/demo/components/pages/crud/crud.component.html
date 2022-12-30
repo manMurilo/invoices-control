@@ -1,0 +1,486 @@
+<div class="grid">
+    <!-- TOTAL SUPPLIERS -->
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3"
+                        >Total Suppliers</span
+                    >
+                    <div class="text-900 font-medium text-xl">152</div>
+                </div>
+                <div
+                    class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                    [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
+                >
+                    <i class="pi pi-users text-blue-500 text-xl"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- LAST MONTH EXPENSES -->
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3"
+                        >Last Month Expenses</span
+                    >
+                    <div class="text-900 font-medium text-xl">$2.100</div>
+                </div>
+                <div
+                    class="flex align-items-center justify-content-center bg-orange-100 border-round"
+                    [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
+                >
+                    <i class="pi pi-dollar text-orange-500 text-xl"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CURRENT MONTH EXPENSES -->
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3"
+                        >Current Month Expenses</span
+                    >
+                    <div class="text-900 font-medium text-xl">28441</div>
+                </div>
+                <div
+                    class="flex align-items-center justify-content-center bg-cyan-100 border-round"
+                    [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
+                >
+                    <i class="pi pi-dollar text-cyan-500 text-xl"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ACCOUNTS PAYABLE THIS MONTH -->
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3"
+                        >Account Payable This Month</span
+                    >
+                    <div class="text-900 font-medium text-xl">152 Unread</div>
+                </div>
+                <div
+                    class="flex align-items-center justify-content-center bg-purple-100 border-round"
+                    [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
+                >
+                    <i class="pi pi-cart-plus text-purple-500 text-xl"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CRUD  -->
+    <div class="col-12">
+        <div class="card px-3 py-3">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-2">
+                <ng-template pTemplate="left">
+                    <div class="my-12">
+                        <button
+                            pButton
+                            pRipple
+                            label="Novo Fornecedor"
+                            icon="pi pi-plus"
+                            class="p-button-success mr-2"
+                            (click)="openNew()"
+                        ></button>
+                        <!-- <button
+                            pButton
+                            pRipple
+                            label="Excluir"
+                            icon="pi pi-trash"
+                            class="p-button-danger"
+                            (click)="deleteSelectedProducts()"
+                            [disabled]="
+                                !selectedProducts || !selectedProducts.length
+                            "
+                        ></button> -->
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table
+                #dt
+                [value]="products"
+                [columns]="cols"
+                responsiveLayout="scroll"
+                [rows]="10"
+                [globalFilterFields]="[
+                    'id',
+                    'contratante',
+                    'fornecedor',
+                    'status'
+                ]"
+                [rows]="10"
+                [paginator]="true"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedProducts"
+                selectionMode="multiple"
+                [rowHover]="true"
+                dataKey="id"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+                    >
+                        <h5 class="m-0">Invoices</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                (input)="onGlobalFilter(dt, $event)"
+                                placeholder="Pesquisar..."
+                                class="w-full sm:w-auto"
+                            />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <!-- <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th> -->
+                        <th pSortableColumn="Id">
+                            Id <p-sortIcon field="id"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="contratante">
+                            Contratante
+                            <p-sortIcon field="contratante"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="fornecedor">
+                            Fornecedor
+                            <p-sortIcon field="fornecedor"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="vencimento">
+                            Vencimento
+                            <p-sortIcon field="vencimento"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="valor">
+                            Valor <p-sortIcon field="valor"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="inventoryStatus">
+                            Status
+                            <p-sortIcon field="inventoryStatus"></p-sortIcon>
+                        </th>
+                        <th>Atualizar</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <!-- <td>
+                            <p-tableCheckbox
+                                [value]="product"
+                            ></p-tableCheckbox>
+                        </td> -->
+                        <td style="width: 14%; min-width: 10rem">
+                            <span class="p-column-title">Id</span>
+                            {{ product.id || product.id }}
+                        </td>
+                        <td style="width: 20%; min-width: 10rem">
+                            <span class="p-column-title">Contratante</span>
+                            {{ product.contratante }}
+                        </td>
+                        <td style="width: 20%; min-width: 10rem">
+                            <span class="p-column-title">Fornecedor</span>
+                            {{ product.fornecedor }}
+                        </td>
+                        <td style="width: 14%; min-width: 10rem">
+                            <span class="p-column-title">Vencimento</span>
+                            {{ product.vencimento }}
+                        </td>
+                        <td style="width: 14%; min-width: 8rem">
+                            <span class="p-column-title">Valor</span>
+                            {{ product.valor | currency : "BRL" }}
+                        </td>
+                        <td style="width: 14%; min-width: 10rem">
+                            <span class="p-column-title">Status</span>
+                            <span
+                                [class]="
+                                    'product-badge status-' +
+                                    (product.inventoryStatus
+                                        ? product.inventoryStatus.toLowerCase()
+                                        : '')
+                                "
+                                >{{ product.inventoryStatus }}</span
+                            >
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="editProduct(product)"
+                                ></button>
+                                <!-- <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-trash"
+                                    class="p-button-rounded p-button-warning"
+                                    (click)="deleteProduct(product)"
+                                ></button> -->
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog
+            [(visible)]="productDialog"
+            [style]="{ width: '600px' }"
+            header="Invoice"
+            [modal]="true"
+            class="p-fluid"
+        >
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="name">Fornecedor</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="fornecedor"
+                        [(ngModel)]="product.fornecedor"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty':
+                                submitted && !product.fornecedor
+                        }"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !product.fornecedor"
+                        >Fornecedor é obrigatório.</small
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="name">Contratante</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="contratante"
+                        [(ngModel)]="product.contratante"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty':
+                                submitted && !product.contratante
+                        }"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !product.contratante"
+                        >Contratante é obrigatório.</small
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="E-mail">E-mail</label>
+                    <input
+                        type="email"
+                        pInputText
+                        id="email"
+                        [(ngModel)]="product.email"
+                        required
+                        autofocus
+                    />
+                </div>
+
+                <div class="field">
+                    <label for="description">Observações</label>
+                    <textarea
+                        id="obs"
+                        pInputTextarea
+                        [(ngModel)]="product.obs"
+                        required
+                        rows="3"
+                        cols="20"
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !product.obs
+                        }"
+                    ></textarea>
+                </div>
+
+                <div class="field">
+                    <label for="status">Status</label>
+                    <p-dropdown
+                        id="status"
+                        [options]="statuses"
+                        optionLabel="label"
+                        [(ngModel)]="product.inventoryStatus"
+                        [ngClass]="{
+                            'ng-invalid ng-dirty':
+                                submitted && !product.inventoryStatus
+                        }"
+                        placeholder="Selecione o Status"
+                    >
+                        <ng-template pTemplate="selectedItem">
+                            <span
+                                *ngIf="product && product.inventoryStatus"
+                                [class]="
+                                    'product-badge status-' +
+                                    product.inventoryStatus.value.toLowerCase()
+                                "
+                                >{{ product.inventoryStatus.value }}</span
+                            >
+                        </ng-template>
+                        <ng-template let-status pTemplate="status">
+                            <span
+                                [class]="
+                                    'product-badge status-' +
+                                    status.value.toLowerCase()
+                                "
+                                >{{ status.label }}</span
+                            >
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="price">Valor</label>
+                        <p-inputNumber
+                            id="valor"
+                            [(ngModel)]="product.valor"
+                            mode="currency"
+                            currency="BRL"
+                            locale="pt-BR"
+                            [ngClass]="{
+                                'ng-invalid ng-dirty':
+                                    submitted && !product.valor
+                            }"
+                        ></p-inputNumber>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="venc">Vencimento</label>
+                    <p-calendar
+                        [(ngModel)]="calendar"
+                        [(ngModel)]="product.vencimento"
+                        id="venc"
+                        dateFormat="dd/mm/yy"
+                        [ngClass]="{
+                            'ng-invalid ng-dirty':
+                                submitted && !product.vencimento
+                        }"
+                    ></p-calendar>
+                    <!-- <input
+                        [(ngModel)]="value"
+                        pInputText
+                        id="venc"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !product.email
+                        }"
+                    /> -->
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button
+                    pButton
+                    pRipple
+                    label="Cancelar"
+                    icon="pi pi-times"
+                    class="p-button-text"
+                    (click)="hideDialog()"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    label="Salvar"
+                    icon="pi pi-check"
+                    class="p-button-text"
+                    (click)="saveProduct()"
+                ></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog
+            [(visible)]="deleteProductDialog"
+            header="Confirmar"
+            [modal]="true"
+            [style]="{ width: '450px' }"
+        >
+            <div class="flex align-items-center justify-content-center">
+                <i
+                    class="pi pi-exclamation-triangle mr-3"
+                    style="font-size: 2rem"
+                ></i>
+                <span *ngIf="product"
+                    >Você tem certeza que deseja exluir,
+                    <b>{{ product.fornecedor }}</b
+                    >?</span
+                >
+            </div>
+            <ng-template pTemplate="footer">
+                <button
+                    pButton
+                    pRipple
+                    icon="pi pi-times"
+                    class="p-button-text"
+                    label="Não"
+                    (click)="deleteProductDialog = false"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    icon="pi pi-check"
+                    class="p-button-text"
+                    label="Sim"
+                    (click)="confirmDelete()"
+                ></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog
+            [(visible)]="deleteProductsDialog"
+            header="Confirmar"
+            [modal]="true"
+            [style]="{ width: '450px' }"
+        >
+            <div class="flex align-items-center justify-content-center">
+                <i
+                    class="pi pi-exclamation-triangle mr-3"
+                    style="font-size: 2rem"
+                ></i>
+                <span
+                    >Você tem certeza que deseja excluir todos os itens
+                    selecionados?</span
+                >
+            </div>
+            <ng-template pTemplate="footer">
+                <button
+                    pButton
+                    pRipple
+                    icon="pi pi-times"
+                    class="p-button-text"
+                    label="Não"
+                    (click)="deleteProductsDialog = false"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    icon="pi pi-check"
+                    class="p-button-text"
+                    label="Sim"
+                    (click)="confirmDeleteSelected()"
+                ></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
